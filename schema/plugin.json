@@ -1,0 +1,16 @@
+{
+  "jupyter.lab.toolbars": {
+    "Notebook": [
+      {
+        "name": "otter",
+        "command": "otter-submit:submit"
+        
+      }
+    ]
+  },
+  "title": "@otter-submit/submit-button",
+  "description": "@otter-submit/submit-button settings.",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": false
+}
