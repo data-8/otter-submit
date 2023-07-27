@@ -3,8 +3,9 @@
     "Notebook": [
       {
         "name": "otter",
-        "command": "otter-submit:submit"
-        
+        "command": "otter-submit:submit",
+        "icon": "ui-components:file-upload",
+        "label": "Submit for Grading"
       }
     ]
   },

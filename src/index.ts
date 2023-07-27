@@ -1,5 +1,6 @@
 import { JupyterFrontEndPlugin, JupyterFrontEnd } from '@jupyterlab/application';
 import { INotebookTracker } from '@jupyterlab/notebook';
+import { fileUploadIcon } from '@jupyterlab/ui-components';
 
 /**
  * The plugin registration information.
@@ -13,15 +14,17 @@ const plugin: JupyterFrontEndPlugin<void> = {
   activate: (app: JupyterFrontEnd, notebookTracker: INotebookTracker) => {
     // Nothing is needed
     const { commands } = app;
-
     const command = 'otter-submit:submit';
     var nbpanel : any;
     notebookTracker.currentChanged.connect((tracker, panel) => {
       nbpanel = panel
     })
+
     // Add a command
     commands.addCommand(command, {
-      label: 'Submit for Grading',
+      label: "Submit for Grading",
+      icon: fileUploadIcon,
+      iconLabel: "Submit for Grading",
       caption: 'Send your notebook to be graded',
       execute: (args: any) => {
         var nb = nbpanel?.context.model.toJSON();
@@ -33,7 +36,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
           method: "POST"
         };
         
-        fetch('/services/gofer_nb/', otherParam)
+        fetch('/services/otter_grade/', otherParam)
           // processes the response (in this case grabs text)
           .then(response=>{return response.text()})
           // processes the output of previous line (calling it data, then doing something with it)
