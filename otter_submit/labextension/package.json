@@ -97,7 +97,12 @@
   "jupyterlab": {
     "extension": true,
     "outputDir": "otter_submit/labextension",
-    "schemaDir": "schema"
+    "schemaDir": "schema",
+    "_build": {
+      "load": "static/remoteEntry.a6cd50a8987ced174910.js",
+      "extension": "./extension",
+      "style": "./style"
+    }
   },
   "eslintIgnore": [
     "node_modules",
