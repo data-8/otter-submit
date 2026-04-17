@@ -15,7 +15,7 @@ const plugin: JupyterFrontEndPlugin<void> = {
   activate: (app: JupyterFrontEnd, notebookTracker: INotebookTracker) => {
     const { commands } = app;
     const command = 'otter-submit:submit';
-    var nbpanel: any;
+    let nbpanel: any;
     notebookTracker.currentChanged.connect((_tracker, panel) => {
       nbpanel = panel;
     });
@@ -27,10 +27,10 @@ const plugin: JupyterFrontEndPlugin<void> = {
       iconLabel: 'Submit for Grading',
       caption: 'Send your notebook to be graded',
       execute: (_args: any) => {
-        var nb = nbpanel?.context.model.toJSON();
+        const nb = nbpanel?.context.model.toJSON();
 
-        var payload = JSON.stringify({ nb: nb });
-        var otherParam = {
+        const payload = JSON.stringify({ nb: nb });
+        const otherParam = {
           headers: { 'Content-Type': 'application/json' },
           body: payload,
           method: 'POST'
