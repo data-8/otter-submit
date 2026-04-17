@@ -60,7 +60,10 @@ jobs:
         run: |
           jlpm install
           jlpm build:prod
-          pip install -e .
+          pip install .
+
+      - name: Verify extension is installed
+        run: jupyter labextension list 2>&1 | grep -i otter
 
       - name: Install Playwright browsers
         run: jlpm playwright install --with-deps chromium
