@@ -1,4 +1,7 @@
-import { JupyterFrontEndPlugin, JupyterFrontEnd } from '@jupyterlab/application';
+import {
+  JupyterFrontEndPlugin,
+  JupyterFrontEnd
+} from '@jupyterlab/application';
 import { showDialog, Dialog } from '@jupyterlab/apputils';
 import { INotebookTracker } from '@jupyterlab/notebook';
 import { fileUploadIcon } from '@jupyterlab/ui-components';
@@ -54,7 +57,6 @@ const plugin: JupyterFrontEndPlugin<void> = {
     });
   }
 };
-
 
 /**
  * Export the plugin as default.
