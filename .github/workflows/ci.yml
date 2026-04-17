@@ -1,0 +1,83 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Python build deps
+        run: pip install jupyterlab hatch hatch-jupyter-builder hatch-nodejs-version
+
+      - name: Install JS dependencies
+        run: jlpm install
+        working-directory: .
+
+      - name: Lint check
+        run: jlpm lint:check
+
+      - name: Build extension (prod)
+        run: jlpm build:prod
+
+      - name: Verify labextension build artifact exists
+        run: |
+          test -f otter_submit/labextension/package.json
+          test -f otter_submit/labextension/static/style.js
+
+  ui-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Python deps
+        run: pip install jupyterlab hatch hatch-jupyter-builder hatch-nodejs-version
+
+      - name: Install and build extension
+        run: |
+          jlpm install
+          jlpm build:prod
+          pip install -e .
+
+      - name: Install Playwright browsers
+        run: jlpm playwright install --with-deps chromium
+        working-directory: ui-tests
+
+      - name: Install ui-test dependencies
+        run: jlpm install
+        working-directory: ui-tests
+
+      - name: Run Playwright tests
+        run: jlpm test
+        working-directory: ui-tests
+
+      - name: Upload Playwright report on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: ui-tests/playwright-report/
+          retention-days: 7

@@ -1,0 +1,17 @@
+{
+  "jupyter.lab.toolbars": {
+    "Notebook": [
+      {
+        "name": "otter",
+        "command": "otter-submit:submit",
+        "icon": "ui-components:file-upload",
+        "label": "Submit for Grading"
+      }
+    ]
+  },
+  "title": "@otter-submit/submit-button",
+  "description": "@otter-submit/submit-button settings.",
+  "type": "object",
+  "properties": {},
+  "additionalProperties": false
+}
